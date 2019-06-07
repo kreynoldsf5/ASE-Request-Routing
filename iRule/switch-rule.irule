@@ -1,6 +1,6 @@
 when HTTP_REQUEST {
     switch -glob [string tolower [HTTP::path]] {
-        "/index" {
+        "/index" "index.html" "/" {
             pool index_pool
         }
         "/favicon" {
