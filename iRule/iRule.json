@@ -92,7 +92,12 @@
             "class": "iRule",
             "iRule": {
               "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/iRule/dg-rule.irule"
-        }
+            } 
+        },
+        "routing_dg": {
+          "class": "Data_Group",
+          "keyDataType": "string",
+          "storageType": "internal"
         }
       }
     }
