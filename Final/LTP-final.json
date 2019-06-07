@@ -1,0 +1,157 @@
+{
+  "class": "ADC",
+  "schemaVersion": "3.10.0",
+  "id": "1-800-273-8255",
+  "label": "LTP-routing-micro-app",
+  "remark": "Simple HTTP application for ASE onsite URI routing exercise",
+  "Routing_Exercise_LTP": {
+    "class": "Tenant",
+    "Micro": {
+      "class": "Application",
+      "template": "http",
+      "serviceMain": {
+        "class": "Service_HTTP",
+        "virtualAddresses": [
+          "10.1.20.9"
+        ],
+        "policyEndpoint": "routing_policy",
+        "profileMultiplex": {
+          "bigip": "/Common/oneconnect"
+        }
+      },
+      "index_pool": {
+        "class": "Pool",
+        "monitors": [
+          "http"
+        ],
+        "members": [{
+          "servicePort": 8080,
+          "shareNodes": true,
+          "serverAddresses": [
+            "10.1.10.5"
+          ]
+        }]
+      },
+      "favicon_pool": {
+          "class": "Pool",
+          "monitors": [
+            "http"
+          ],
+          "members": [{
+            "servicePort": 8181,
+            "shareNodes": true,
+            "serverAddresses": [
+              "10.1.10.5"
+            ]
+          }]
+      },
+      "logo_pool": {
+          "class": "Pool",
+          "monitors": [
+            "http"
+          ],
+          "members": [{
+            "servicePort": 8282,
+            "shareNodes": true,
+            "serverAddresses": [
+              "10.1.10.5"
+            ]
+          }]
+      },
+      "api_pool": {
+          "class": "Pool",
+          "monitors": [
+            "http"
+          ],
+          "members": [{
+            "servicePort": 8383,
+            "shareNodes": true,
+            "serverAddresses": [
+              "10.1.10.5"
+            ]
+          }]
+      },
+      "routing_policy": {
+        "class": "Endpoint_Policy",
+        "strategy": "first-match",
+        "rules": [{
+          "name": "api_pool",
+          "conditions": [{
+            "type": "httpUri",
+            "path": {
+              "operand": "equals",
+              "values": ["/api"]
+            }
+          }],
+          "actions": [{
+            "type": "forward",
+            "event": "request",
+            "select": {
+              "pool": {
+                "use": "api_pool"
+              }
+            }
+          }]
+        },
+        {
+          "name": "favicon_pool",
+          "conditions": [{
+            "type": "httpUri",
+            "path": {
+              "operand": "equals",
+              "values": ["/favicon.ico"]
+            }
+          }],
+          "actions": [{
+            "type": "forward",
+            "event": "request",
+            "select": {
+              "pool": {
+                "use": "favicon_pool"
+              }
+            }
+          }]
+        },
+        {
+          "name": "index_pool",
+          "conditions": [{
+            "type": "httpUri",
+            "path": {
+              "operand": "equals",
+              "values": ["/index", "/index.html", "/"]
+            }
+          }],
+          "actions": [{
+            "type": "forward",
+            "event": "request",
+            "select": {
+              "pool": {
+                "use": "index_pool"
+              }
+            }
+          }]
+        },
+        {
+          "name": "logo_pool",
+          "conditions": [{
+            "type": "httpUri",
+            "path": {
+              "operand": "equals",
+              "values": ["/logo.png"]
+            }
+          }],
+          "actions": [{
+            "type": "forward",
+            "event": "request",
+            "select": {
+              "pool": {
+                "use": "logo_pool"
+              }
+            }
+          }]
+        }
+      ]
+      }
+    }
+  }
+}

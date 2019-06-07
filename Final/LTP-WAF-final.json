@@ -92,7 +92,7 @@
                 "conditions": [{
                 "type": "httpUri",
                 "path": {
-                    "values": ["/index"]
+                    "values": ["/index", "/index.html", "/"]
                 }
                 }],
                 "actions": [{
@@ -106,15 +106,13 @@
                 "name": "disable",
                 "conditions": [],
                 "actions": [{
-                    "type": "waf",
-                    "policy": {
-                        "use": "linux_high"
-                    }
+                    "type": "waf"
                 }]
             }]
         },
         "routing_policy": {
           "class": "Endpoint_Policy",
+          "strategy": "first-match",
           "rules": [{
             "name": "api_pool",
             "conditions": [{

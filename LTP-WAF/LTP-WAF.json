@@ -90,6 +90,7 @@
           "class": "Endpoint_Policy",
           "rules": [{
             "name": "api_pool",
+            "strategy": "first-match",
             "conditions": [{
               "type": "httpUri",
               "path": {
@@ -132,7 +133,7 @@
               "type": "httpUri",
               "path": {
                 "operand": "equals",
-                "values": ["/index"]
+                "values": ["/index", "index.html", "/"]
               }
             }],
             "actions": [{
