@@ -1,0 +1,8 @@
+class routing-dg {
+   {
+      "/index.html" { "index-pool" }
+      "/favicon.ico" { "favicon-pool" }
+      "/logo.png" { "logo-pool" }
+      "/api" { "api-pool" }
+   }
+}

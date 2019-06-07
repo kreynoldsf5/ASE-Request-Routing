@@ -1,0 +1,20 @@
+when HTTP_REQUEST {
+    switch -glob [string tolower [HTTP::uri]] {
+        "/index" {
+            pool index-pool
+        }
+        "/favicon" {
+            pool favicon-pool
+        }
+        "/logo.*" {
+            pool logo-pool
+        }
+        "/api" {
+            pool api-pool
+        }
+        default {
+            log local0. "ERROR: request for [HTTP::uri]."
+            HTTP::respond 404 "No URI for you!"
+        }
+    }
+}

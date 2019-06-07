@@ -1,0 +1,8 @@
+when HTTP_REQUEST {
+    if { [class match [string tolower [HTTP::uri]] equals routing-dg] } {
+        pool [class match -value [string tolower [HTTP::uri]] equals routing-dg]
+    } else {
+        log local0. "ERROR: request for [HTTP::uri]."
+        HTTP::respond 404 "No URI for you!"
+    }
+}
