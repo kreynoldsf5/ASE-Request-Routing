@@ -84,7 +84,7 @@
         },
         "linux_high": {
           "class": "WAF_Policy",
-          "url": "http://10.145.106.100/asm-policy/asm-policy-linux-high.xml"
+          "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/LTP-WAF/asm-policy-linux-high.xml"
         },
         "routing_policy": {
           "class": "Endpoint_Policy",
