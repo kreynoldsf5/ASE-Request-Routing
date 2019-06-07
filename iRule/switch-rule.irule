@@ -1,6 +1,5 @@
 when HTTP_REQUEST {
     switch -glob [string tolower [HTTP::path]] {
-        "/index" -
         "index.html" -
         "/" {
             pool index_pool
@@ -16,7 +15,7 @@ when HTTP_REQUEST {
         }
         default {
             log local0. "ERROR: request for [HTTP::uri]."
-            HTTP::respond 404 "No URI for you!"
+            HTTP::respond 404 content "No URI for you!"
         }
     }
 }

@@ -3,6 +3,6 @@ when HTTP_REQUEST {
         pool [class match -value [string tolower [HTTP::path]] equals routing_dg]
     } else {
         log local0. "ERROR: request for [HTTP::uri]."
-        HTTP::respond 404 "No URI for you!"
+        HTTP::respond 404 content "No URI for you!"
     }
 }

@@ -9,6 +9,6 @@ when HTTP_REQUEST {
         pool api_pool
     } else {
         log local0. "ERROR: request for [HTTP::uri]."
-        HTTP::respond 404 "No URI for you!"
+        HTTP::respond 404 content "No URI for you!"
     }
 }

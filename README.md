@@ -36,21 +36,13 @@
 
 ## TBD
 
-Refactor docker-compose.yaml to expose these services externally
-Build prototypes for:
-   iRule/datagroup
-   Local traffic policies
-   AS3 declarations for each of the above
-Build postman collections for "true-up" steps
+### Final/Answers
+1. First exercise declaration with records
+2. Second exercise declaration with LTP from 3rd exercise
+3. Third is done.
+
 Build a simple guide
 
 Need the following:
 
-iRule using if statements
-iRules using switch statements
-iRule using data group
--- include an explanation as to why the first two are baaaaaaaad.
-
-Local traffic policy
--- explain why this is better than the iRule (running natively in tmm, you can update with draft policies)
 
