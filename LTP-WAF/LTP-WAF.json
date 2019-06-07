@@ -9,7 +9,7 @@
     "id": "555-5555",
     "label": "waf-routing-micro-app",
     "remark": "Simple HTTP application for ASE onsite URI routing exercise",
-    "Routing-Exercise-WAF": {
+    "Routing_Exercise_WAF": {
       "class": "Tenant",
       "Micro": {
         "class": "Application",
@@ -19,15 +19,18 @@
           "virtualAddresses": [
             "10.1.20.10"
           ],
-          "policyWAF":{"bigip":"/Common/linux-high"},
+          "policyWAF":{"use":"linux_high"},
           "securityLogProfiles": [
           {
             "bigip": "/Common/Log all requests"
           }
           ],
-          "policyEndpoint": "routing_policy"
+          "policyEndpoint": "routing_policy",
+          "profileMultiplex": {
+            "bigip": "/Common/oneconnect"
+          }
         },
-        "index-pool": {
+        "index_pool": {
           "class": "Pool",
           "monitors": [
             "http"
@@ -40,7 +43,7 @@
             ]
           }]
         },
-        "favicon-pool": {
+        "favicon_pool": {
             "class": "Pool",
             "monitors": [
               "http"
@@ -53,7 +56,7 @@
               ]
             }]
         },
-        "logo-pool": {
+        "logo_pool": {
             "class": "Pool",
             "monitors": [
               "http"
@@ -66,7 +69,7 @@
               ]
             }]
         },
-        "api-pool": {
+        "api_pool": {
             "class": "Pool",
             "monitors": [
               "http"
@@ -79,18 +82,19 @@
               ]
             }]
         },
-        "profileMultiplex": {
-            "bigip": "/Common/oneconnect"
+        "linux_high": {
+          "class": "WAF_Policy",
+          "url": "http://10.145.106.100/asm-policy/asm-policy-linux-high.xml"
         },
         "routing_policy": {
           "class": "Endpoint_Policy",
           "rules": [{
-            "name": "forward_to_pool",
+            "name": "api_pool",
             "conditions": [{
               "type": "httpUri",
               "path": {
-                "operand": "contains",
-                "values": ["example.com"]
+                "operand": "equals",
+                "values": ["/api"]
               }
             }],
             "actions": [{
@@ -98,11 +102,69 @@
               "event": "request",
               "select": {
                 "pool": {
-                  "use": "web_pool"
+                  "use": "api_pool"
                 }
               }
             }]
-          }]
+          },
+          {
+            "name": "favicon_pool",
+            "conditions": [{
+              "type": "httpUri",
+              "path": {
+                "operand": "equals",
+                "values": ["/favicon.ico"]
+              }
+            }],
+            "actions": [{
+              "type": "forward",
+              "event": "request",
+              "select": {
+                "pool": {
+                  "use": "favicon_pool"
+                }
+              }
+            }]
+          },
+          {
+            "name": "index_pool",
+            "conditions": [{
+              "type": "httpUri",
+              "path": {
+                "operand": "equals",
+                "values": ["/index"]
+              }
+            }],
+            "actions": [{
+              "type": "forward",
+              "event": "request",
+              "select": {
+                "pool": {
+                  "use": "index_pool"
+                }
+              }
+            }]
+          },
+          {
+            "name": "logo_pool",
+            "conditions": [{
+              "type": "httpUri",
+              "path": {
+                "operand": "equals",
+                "values": ["/logo.png"]
+              }
+            }],
+            "actions": [{
+              "type": "forward",
+              "event": "request",
+              "select": {
+                "pool": {
+                  "use": "logo_pool"
+                }
+              }
+            }]
+          }
+        ]
         }
       }
     }
