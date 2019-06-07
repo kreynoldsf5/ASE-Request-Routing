@@ -1,5 +1,5 @@
 when HTTP_REQUEST {
-    if { ([string tolower [HTTP::path]] equals "/index.html") or ([HTTP::path] equals "/") {
+    if { ([string tolower [HTTP::path]] equals "/index.html") || ([HTTP::path] equals "/") {
         pool index_pool
     } elseif { [string tolower [HTTP::path]] equals "/favicon.ico" }  {
         pool favicon_pool
