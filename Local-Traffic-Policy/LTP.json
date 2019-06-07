@@ -71,9 +71,11 @@
             ]
           }]
       },
-      "routing-policy": {
+      "routing_policy": {
         "class": "Endpoint_Policy",
-        "rules": []
+        "rules": [{
+          "name": "do_nothing"
+        }]
       }
     }
   }

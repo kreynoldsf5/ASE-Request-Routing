@@ -1,0 +1,84 @@
+ltm policy /Routing_Exercise_LTP/Micro/Drafts/routing_policy {
+    controls { forwarding }
+    last-modified 2019-06-07:11:18:15
+    partition Routing_Exercise_LTP
+    published-copy /Routing_Exercise_LTP/Micro/routing_policy
+    references {
+        virtual-servers {
+            /Routing_Exercise_LTP/Micro/serviceMain { }
+        }
+    }
+    requires { http }
+    rules {
+        api_rule {
+            actions {
+                0 {
+                    forward
+                    select
+                    pool /Routing_Exercise_LTP/Micro/api_pool
+                }
+            }
+            conditions {
+                0 {
+                    http-uri
+                    path
+                    values { /api }
+                }
+            }
+            ordinal 4
+        }
+        favicon_rule {
+            actions {
+                0 {
+                    forward
+                    select
+                    pool /Routing_Exercise_LTP/Micro/favicon_pool
+                }
+            }
+            conditions {
+                0 {
+                    http-uri
+                    path
+                    values { /favicon.ico }
+                }
+            }
+            ordinal 2
+        }
+        index_rule {
+            actions {
+                0 {
+                    forward
+                    select
+                    pool /Routing_Exercise_LTP/Micro/index_pool
+                }
+            }
+            conditions {
+                0 {
+                    http-uri
+                    path
+                    values { index }
+                }
+            }
+            ordinal 1
+        }
+        logo_rule {
+            actions {
+                0 {
+                    forward
+                    select
+                    pool /Routing_Exercise_LTP/Micro/logo_pool
+                }
+            }
+            conditions {
+                0 {
+                    http-uri
+                    path
+                    values { /logo.png }
+                }
+            }
+            ordinal 3
+        }
+    }
+    status draft
+    strategy best-match
+}
