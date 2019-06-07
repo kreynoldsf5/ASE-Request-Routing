@@ -6,20 +6,26 @@
   "declaration": {
     "class": "ADC",
     "schemaVersion": "3.10.0",
-    "id": "867-5309",
-    "label": "irule-routing-micro-app",
+    "id": "555-5555",
+    "label": "waf-routing-micro-app",
     "remark": "Simple HTTP application for ASE onsite URI routing exercise",
-    "Routing-Exercise-iRule": {
+    "Routing-Exercise-WAF": {
       "class": "Tenant",
       "Micro": {
         "class": "Application",
         "template": "http",
         "serviceMain": {
           "class": "Service_HTTP",
-          "iRules": ["if-rule"],
           "virtualAddresses": [
-            "10.1.20.8"
-          ]
+            "10.1.20.10"
+          ],
+          "policyWAF":{"bigip":"/Common/linux-high"},
+          "securityLogProfiles": [
+          {
+            "bigip": "/Common/Log all requests"
+          }
+          ],
+          "policyEndpoint": "routing_policy"
         },
         "index-pool": {
           "class": "Pool",
@@ -76,25 +82,29 @@
         "profileMultiplex": {
             "bigip": "/Common/oneconnect"
         },
-        "if-rule": {
-          "class": "iRule",
-          "iRule": {
-            "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/iRule/if-rule.irule"
-          }
-        },
-        "switch-rule": {
-            "class": "iRule",
-            "iRule": {
-              "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/iRule/switch-rule.irule"
-            }
-        },
-        "dg-rule": {
-            "class": "iRule",
-            "iRule": {
-              "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/iRule/dg-rule.irule"
-        }
+        "routing_policy": {
+          "class": "Endpoint_Policy",
+          "rules": [{
+            "name": "forward_to_pool",
+            "conditions": [{
+              "type": "httpUri",
+              "path": {
+                "operand": "contains",
+                "values": ["example.com"]
+              }
+            }],
+            "actions": [{
+              "type": "forward",
+              "event": "request",
+              "select": {
+                "pool": {
+                  "use": "web_pool"
+                }
+              }
+            }]
+          }]
         }
       }
     }
   }
-}
+} 
