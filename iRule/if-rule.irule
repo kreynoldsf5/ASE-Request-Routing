@@ -1,12 +1,12 @@
 when HTTP_REQUEST {
     if { [string tolower [HTTP::uri]] equals "/index.html" } {
-        pool index-pool
+        pool index_pool
     } elseif { [string tolower [HTTP::uri]] equals "/favicon.ico" }  {
-        pool favicon-pool
+        pool favicon_pool
     } elseif { [string tolower [HTTP::uri]] equals "/logo.png" } {
-        pool logo-pool
+        pool logo_pool
     } elseif { [string tolower [HTTP::uri]] equals "/api" } {
-        pool api-pool
+        pool api_pool
     } else {
         log local0. "ERROR: request for [HTTP::uri]."
         HTTP::respond 404 "No URI for you!"

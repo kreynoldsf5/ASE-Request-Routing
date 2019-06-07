@@ -1,16 +1,16 @@
 when HTTP_REQUEST {
     switch -glob [string tolower [HTTP::uri]] {
         "/index" {
-            pool index-pool
+            pool index_pool
         }
         "/favicon" {
-            pool favicon-pool
+            pool favicon_pool
         }
         "/logo.*" {
-            pool logo-pool
+            pool logo_pool
         }
         "/api" {
-            pool api-pool
+            pool api_pool
         }
         default {
             log local0. "ERROR: request for [HTTP::uri]."

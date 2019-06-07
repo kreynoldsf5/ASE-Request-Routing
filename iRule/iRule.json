@@ -9,19 +9,22 @@
     "id": "867-5309",
     "label": "irule-routing-micro-app",
     "remark": "Simple HTTP application for ASE onsite URI routing exercise",
-    "Routing-Exercise-iRule": {
+    "Routing_Exercise_iRule": {
       "class": "Tenant",
       "Micro": {
         "class": "Application",
         "template": "http",
         "serviceMain": {
           "class": "Service_HTTP",
-          "iRules": ["if-rule"],
+          "iRules": ["if_rule"],
           "virtualAddresses": [
             "10.1.20.8"
-          ]
+          ],
+          "profileMultiplex": {
+            "bigip": "/Common/oneconnect"
+          }
         },
-        "index-pool": {
+        "index_pool": {
           "class": "Pool",
           "monitors": [
             "http"
@@ -34,7 +37,7 @@
             ]
           }]
         },
-        "favicon-pool": {
+        "favicon_pool": {
             "class": "Pool",
             "monitors": [
               "http"
@@ -47,7 +50,7 @@
               ]
             }]
         },
-        "logo-pool": {
+        "logo_pool": {
             "class": "Pool",
             "monitors": [
               "http"
@@ -60,7 +63,7 @@
               ]
             }]
         },
-        "api-pool": {
+        "api_pool": {
             "class": "Pool",
             "monitors": [
               "http"
@@ -73,22 +76,19 @@
               ]
             }]
         },
-        "profileMultiplex": {
-            "bigip": "/Common/oneconnect"
-        },
-        "if-rule": {
+        "if_rule": {
           "class": "iRule",
           "iRule": {
             "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/iRule/if-rule.irule"
           }
         },
-        "switch-rule": {
+        "switch_rule": {
             "class": "iRule",
             "iRule": {
               "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/iRule/switch-rule.irule"
             }
         },
-        "dg-rule": {
+        "dg_rule": {
             "class": "iRule",
             "iRule": {
               "url": "https://raw.githubusercontent.com/kreynoldsf5/ASE-Request-Routing/master/iRule/dg-rule.irule"
