@@ -97,7 +97,8 @@
         "routing_dg": {
           "class": "Data_Group",
           "keyDataType": "string",
-          "storageType": "internal"
+          "storageType": "internal",
+          "records": []
         }
       }
     }

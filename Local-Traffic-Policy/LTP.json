@@ -4,7 +4,7 @@
   "id": "1-800-273-8255",
   "label": "LTP-routing-micro-app",
   "remark": "Simple HTTP application for ASE onsite URI routing exercise",
-  "Routing-Exercise-LTP": {
+  "Routing_Exercise_LTP": {
     "class": "Tenant",
     "Micro": {
       "class": "Application",
@@ -14,9 +14,12 @@
         "virtualAddresses": [
           "10.0.20.9"
         ],
-        "policyEndpoint": "routing_policy"
+        "policyEndpoint": "routing_policy",
+        "profileMultiplex": {
+          "bigip": "/Common/oneconnect"
+        }
       },
-      "index-pool": {
+      "index_pool": {
         "class": "Pool",
         "monitors": [
           "http"
@@ -29,7 +32,7 @@
           ]
         }]
       },
-      "favicon-pool": {
+      "favicon_pool": {
           "class": "Pool",
           "monitors": [
             "http"
@@ -42,7 +45,7 @@
             ]
           }]
       },
-      "logo-pool": {
+      "logo_pool": {
           "class": "Pool",
           "monitors": [
             "http"
@@ -55,7 +58,7 @@
             ]
           }]
       },
-      "api-pool": {
+      "api_pool": {
           "class": "Pool",
           "monitors": [
             "http"
@@ -68,30 +71,9 @@
             ]
           }]
       },
-      "profileMultiplex": {
-          "bigip": "/Common/oneconnect"
-      },
-      "routing_policy": {
+      "routing-policy": {
         "class": "Endpoint_Policy",
-        "rules": [{
-          "name": "forward_to_pool",
-          "conditions": [{
-            "type": "httpUri",
-            "path": {
-              "operand": "contains",
-              "values": ["example.com"]
-            }
-          }],
-          "actions": [{
-            "type": "forward",
-            "event": "request",
-            "select": {
-              "pool": {
-                "use": "web_pool"
-              }
-            }
-          }]
-        }]
+        "rules": []
       }
     }
   }
