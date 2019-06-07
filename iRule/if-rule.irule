@@ -1,11 +1,11 @@
 when HTTP_REQUEST {
-    if { [string tolower [HTTP::uri]] equals "/index.html" } {
+    if { [string tolower [HTTP::path]] equals "/index.html" } {
         pool index_pool
-    } elseif { [string tolower [HTTP::uri]] equals "/favicon.ico" }  {
+    } elseif { [string tolower [HTTP::path]] equals "/favicon.ico" }  {
         pool favicon_pool
-    } elseif { [string tolower [HTTP::uri]] equals "/logo.png" } {
+    } elseif { [string tolower [HTTP::path]] equals "/logo.png" } {
         pool logo_pool
-    } elseif { [string tolower [HTTP::uri]] equals "/api" } {
+    } elseif { [string tolower [HTTP::path]] equals "/api" } {
         pool api_pool
     } else {
         log local0. "ERROR: request for [HTTP::uri]."

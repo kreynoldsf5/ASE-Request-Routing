@@ -1,5 +1,5 @@
 when HTTP_REQUEST {
-    switch -glob [string tolower [HTTP::uri]] {
+    switch -glob [string tolower [HTTP::path]] {
         "/index" {
             pool index_pool
         }
