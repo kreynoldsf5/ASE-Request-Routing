@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+    micro-api:
+        image: micro-api
+        ports:
+          - 8383:80
+        restart: always
+
+    micro-favicon:
+        image: micro-favicon 
+        ports:
+          - 8181:80
+        restart: always
+
+    micro-index:
+        image: micro-index
+        ports:
+          - 8080:80
+        restart: always
+
+    micro-logo:
+        image: micro-logo
+        ports:
+          - 8282:80
+        volumes:
+          - ./logo/:/usr/share/nginx/html/
+        restart: always
